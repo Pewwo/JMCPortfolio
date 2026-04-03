@@ -1,0 +1,41 @@
+/* Custom scrollbar override */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Custom Animation for Hero Background */
+@keyframes slowZoom {
+    0% { transform: scale(1.05); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1.05); }
+}
+
+.animate-slow-zoom {
+    animation: slowZoom 30s ease-in-out infinite;
+}
+
+/* Custom selection styling */
+::selection {
+    background-color: #c5a880;
+    color: #111111;
+}
+
+::-moz-selection {
+    background-color: #c5a880;
+    color: #111111;
+}
+
+/* Filter button active state */
+.filter-btn.active {
+    color: #c5a880;
+    border-bottom: 1px solid #c5a880;
+}
+
+/* Smooth scrolling override */
+html {
+    scroll-behavior: smooth;
+}
