@@ -1,5 +1,6 @@
 <?php
 // Project Data Centralization & Dynamic Image Loading
+$base_dir = __DIR__ . '/../';
 $projects = [
     'savannah' => [
         'title' => 'Savannah',
@@ -368,7 +369,7 @@ $projects = [
             <div class="flex flex-wrap justify-center gap-x-12 lg:gap-x-20 gap-y-16 lg:gap-y-24 items-start pb-40">
 
                 <?php foreach ($projects as $id => $p):
-                    $images = glob($p['path'] . "/*.{png,jpg,jpeg,webp}", GLOB_BRACE);
+                    $raw_images = glob($base_dir . $p['path'] . "/*.{png,jpg,jpeg,webp}", GLOB_BRACE);
                     ?>
                     <!-- Project: <?= $p['title'] ?> -->
                     <div class="w-full md:w-[200px] lg:w-[320px] group cursor-pointer flex flex-col items-center transition-all duration-700 hover:-translate-y-4 <?= $p['offset'] ?>"
@@ -376,8 +377,10 @@ $projects = [
                         <div
                             class="overflow-hidden aspect-square w-full rounded-[3rem] bg-surface mb-10 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.08)] hover:shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)] transition-all duration-700 relative project-carousel border border-primary/5">
                             <div class="carousel-inner h-full w-full relative">
-                                <?php foreach ($images as $index => $img): ?>
-                                    <img src="<?= $img ?>"
+                                <?php foreach ($raw_images as $index => $img_path): 
+                                    $web_img = str_replace($base_dir, '', $img_path);
+                                    ?>
+                                    <img src="<?= $web_img ?>"
                                         class="absolute inset-0 w-full h-full object-cover transition-all duration-[2s] group-hover:scale-110 <?= $index === 0 ? 'opacity-100 z-10' : 'opacity-0' ?>"
                                         alt="<?= $p['title'] ?>">
                                 <?php endforeach; ?>
@@ -491,8 +494,8 @@ $projects = [
 
     <!-- Dynamic Project Modals Loop -->
     <?php foreach ($projects as $id => $p):
-        $images = glob($p['path'] . "/*.{png,jpg,jpeg,webp}", GLOB_BRACE);
-        $img_count = count($images);
+        $raw_images = glob($base_dir . $p['path'] . "/*.{png,jpg,jpeg,webp}", GLOB_BRACE);
+        $img_count = count($raw_images);
         ?>
         <div id="modal-<?= $id ?>"
             class="fixed inset-0 z-[100] hidden items-center justify-center p-4 md:p-12 lg:p-20 bg-textdark/60 backdrop-blur-md opacity-0 transition-all duration-700">
@@ -502,13 +505,15 @@ $projects = [
                 <div class="w-full lg:w-[60%] min-h-[50vh] lg:h-auto relative bg-textdark/5 overflow-hidden modal-carousel group/modal-car"
                     data-project="<?= $id ?>">
                     <div class="carousel-inner absolute inset-0 w-full h-full relative">
-                        <?php if (empty($images)): ?>
+                        <?php if (empty($raw_images)): ?>
                             <div
                                 class="h-full w-full flex items-center justify-center bg-gray-50 text-gray-400 font-serif italic text-sm">
                                 Imagery coming soon...</div>
                         <?php else: ?>
-                            <?php foreach ($images as $index => $img): ?>
-                                <img src="<?= $img ?>"
+                            <?php foreach ($raw_images as $index => $img_path): 
+                                $web_img = str_replace($base_dir, '', $img_path);
+                                ?>
+                                <img src="<?= $web_img ?>"
                                     class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 <?= $index === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0' ?>"
                                     alt="<?= $p['title'] ?>">
                             <?php endforeach; ?>
