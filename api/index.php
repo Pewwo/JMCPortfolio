@@ -440,7 +440,7 @@ $projects = [
                     <div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 -z-10 blur-3xl"></div>
                     <form id="contactForm" class="space-y-16" action="https://api.web3forms.com/submit" method="POST">
                         <!-- Web3Forms Config -->
-                        <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+                        <input type="hidden" name="access_key" value="6fd81ee8-0b07-4898-b35f-98168d54816a">
                         <input type="hidden" name="subject" value="New Inquiry from Portfolio">
                         <input type="hidden" name="from_name" value="Architect Portfolio">
 

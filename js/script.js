@@ -54,7 +54,7 @@ function toggleMenu() {
     }
 }
 
-if(mobileMenuBtn) {
+if (mobileMenuBtn) {
     mobileMenuBtn.addEventListener('click', toggleMenu);
 }
 
@@ -65,7 +65,7 @@ mobileLinks.forEach(link => {
 // Modal Logic for Projects
 function openModal(modalId) {
     const modal = document.getElementById(modalId);
-    if(modal) {
+    if (modal) {
         modal.classList.remove('hidden');
         setTimeout(() => {
             modal.classList.remove('opacity-0');
@@ -77,7 +77,7 @@ function openModal(modalId) {
 
 function closeModal(modalId) {
     const modal = document.getElementById(modalId);
-    if(modal) {
+    if (modal) {
         modal.classList.remove('opacity-100');
         modal.classList.add('opacity-0');
         setTimeout(() => {
@@ -90,8 +90,8 @@ function closeModal(modalId) {
 
 // Close modal when clicking outside the content block
 document.querySelectorAll('[id^="modal-"]').forEach(modal => {
-    modal.addEventListener('click', function(e) {
-        if(e.target === this) {
+    modal.addEventListener('click', function (e) {
+        if (e.target === this) {
             closeModal(this.id);
         }
     });
@@ -102,17 +102,17 @@ const contactForm = document.getElementById('contactForm');
 const formFeedback = document.getElementById('formFeedback');
 
 if (contactForm) {
-    contactForm.addEventListener('submit', async function(e) {
+    contactForm.addEventListener('submit', async function (e) {
         e.preventDefault();
 
         // Check if access key is still placeholder
         const accessKey = this.querySelector('input[name="access_key"]').value;
-        if (accessKey === 'YOUR_ACCESS_KEY_HERE') {
+        if (accessKey === 'YOUR_ACCESS_KEY_HERE' || !accessKey) {
             formFeedback.classList.remove('hidden');
             formFeedback.innerHTML = `<span class="text-red-500 flex items-center justify-center gap-2 font-medium"><i class="ph ph-warning-circle"></i> Please set your Web3Forms Access Key in index.php</span>`;
             return;
         }
-        
+
         const submitBtn = this.querySelector('button[type="submit"]');
         const originalText = submitBtn.innerText;
         submitBtn.innerText = 'Sending...';
@@ -130,7 +130,7 @@ if (contactForm) {
             const data = await response.json();
 
             formFeedback.classList.remove('hidden');
-            
+
             if (data.success) {
                 formFeedback.innerHTML = `<span class="text-primary flex items-center justify-center gap-2 font-medium"><i class="ph ph-check-circle"></i> ${data.message}</span>`;
                 contactForm.reset();
@@ -157,14 +157,14 @@ function navigateCarousel(btn, direction) {
     if (images.length <= 1) return;
 
     let currentIndex = Array.from(images).findIndex(img => img.classList.contains('opacity-100'));
-    
+
     // Hide old
     images[currentIndex].classList.remove('opacity-100', 'z-10');
     images[currentIndex].classList.add('opacity-0', 'z-0');
-    
+
     // New index
     currentIndex = (currentIndex + direction + images.length) % images.length;
-    
+
     // Show new
     images[currentIndex].classList.remove('opacity-0', 'z-0');
     images[currentIndex].classList.add('opacity-100', 'z-10');
@@ -176,7 +176,7 @@ function initCarousels() {
     carousels.forEach((carousel, index) => {
         const images = carousel.querySelectorAll('.carousel-inner img');
         if (images.length <= 1) return;
-        
+
         let currentIndex = 0;
         // Stagger the start based on the element's index (1.2s gap)
         setTimeout(() => {
@@ -184,14 +184,14 @@ function initCarousels() {
                 // Hide current
                 images[currentIndex].classList.remove('opacity-100', 'z-10');
                 images[currentIndex].classList.add('opacity-0', 'z-0');
-                
+
                 currentIndex = (currentIndex + 1) % images.length;
-                
+
                 // Show next
                 images[currentIndex].classList.remove('opacity-0', 'z-0');
                 images[currentIndex].classList.add('opacity-100', 'z-10');
             }, 5000);
-        }, index * 1200); 
+        }, index * 1200);
     });
 }
 
@@ -204,10 +204,10 @@ function initModalCarousels() {
         const nextBtn = carousel.querySelector('.carousel-next');
         const counter = carousel.querySelector('.current-slide');
         const total = carousel.querySelector('.total-slides');
-        
+
         if (!images.length || !prevBtn || !nextBtn) return;
         if (total) total.innerText = images.length;
-        
+
         let currentIndex = 0;
         let interval;
 
